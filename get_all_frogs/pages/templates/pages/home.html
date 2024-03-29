@@ -1,7 +1,50 @@
 {% extends 'index.html' %}
 
-
 {% block content %}
+
+
+{% if user.is_authenticated %}
+<div class="main">
+    <div class="row">
+        <div class="upper_part">
+            <h1 class="text-center">Welcome to Get all Frogs {{ user.username }}!</h1>
+            <p class="lead text-center">Embark on an exciting journey by scanning QR codes in "Żabka" stores.</p>
+            <p class="text-center">Climb to the top of the leaderboard and unlock achievements along the way.</p>
+            <h2 class="text-center">Explore Points of Interest (POI)</h2>
+            <p class="text-center">Discover intriguing locations where you can scan QR codes and join discussions.</p>
+        </div>
+    </div>
+
+    <div class="token">
+        <h1 class="text-center token-text">Enter Token</h1>
+    </div>
+</div>
+
+  <!-- Tutaj trzeba dodać form, w którym będzie sie dało wysłać token i potem redirecta po submicie do podstrony zabki i guess, moze byc tez ranking albo achivements i tam odpowiednio na przyklad ile brakuje do nowego achivementu albo pozycja w rankingu, czy cos, badzcie kreatywni chlopaki -->
+
+{% else %}
+
+<div class="main">
+    <div class="row">
+        <div class="upper_part">
+            <h1 class="text-center">Welcome to Get all Frogs</h1>
+            <p class="lead text-center">Embark on an exciting journey by scanning QR codes in "Żabka" stores.</p>
+            <p class="text-center">Climb to the top of the leaderboard and unlock achievements along the way.</p>
+            <h2 class="text-center">Explore Points of Interest (POI)</h2>
+            <p class="text-center">Discover intriguing locations where you can scan QR codes and join discussions.</p>
+
+            <a href="{% url 'login' %}" class="here-link">     
+              <h2 class="text-center">Login to continue</h2>
+            </a>
+        </div>
+    </div>
+</div>
+  
+
+
+  
+
+{% endif %}
 
 
 

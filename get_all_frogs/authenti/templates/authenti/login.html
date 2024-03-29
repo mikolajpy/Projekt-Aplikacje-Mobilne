@@ -9,7 +9,9 @@
         <form method = "POST" action = "" class = "register-form">
             
             {% csrf_token %}
-    
+            {% if form.errors %}
+            <p>Something is wrong</p>
+            {% endif %}
             <input type = "text" placeholder = "enter the username..." name = "username">
     
             <input type = "password" placeholder = "enter the password..." name = "password">
