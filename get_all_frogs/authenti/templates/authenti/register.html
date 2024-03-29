@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+
+{% block content %}
+<body>
+    <h1>Register page</h1>
+    <div class="register-form-wrapper"> 
+        <form method="POST" action="" class="register-form">
+            {% csrf_token %}
+            
+            <input type="text" name="username" placeholder="enter the username">
+            <input type="password" name="password1" placeholder="enter the password">
+            <input type="password" name="password2" placeholder="confirm the password">
+
+            {{ user_creation_form.username.errors }}
+            {{ user_creation_form.password1.errors }}
+            {{ user_creation_form.password2.errors }}
+            
+            <input type="submit" value="Submit">
+        </form>
+        
+        <div class="switch-login-register">
+            Already have an account? Login <a href="{% url 'login' %}" class="here-link">here</a>.
+        </div>   
+    </div>
+</body>
+{% endblock content %}

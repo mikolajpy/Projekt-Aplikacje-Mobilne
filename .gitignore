@@ -1,2 +1,7 @@
 
 .DS_Store
+/get_all_frogs/get_all_frogs/__pycache__
+/get_all_frogs/pages/__pycache__
+/get_all_frogs/pages/migrations/__pycache__
+/get_all_frogs/authenti/__pycache__
+/get_all_frogs/authenti/migrations/__pycache__

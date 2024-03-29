@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+
+
+ 
+{%block content%}
+<body>
+    <h1>Login page</h1>
+    <div class = "register-form-wrapper">
+        <form method = "POST" action = "" class = "register-form">
+            
+            {% csrf_token %}
+    
+            <input type = "text" placeholder = "enter the username..." name = "username">
+    
+            <input type = "password" placeholder = "enter the password..." name = "password">
+    
+            <input type = "submit" value = "Submit">
+    
+        </form>
+    
+        
+    
+            <div class = "switch-login-register">
+    
+                Don't have an account? Register
+                <a href= "{% url 'register' %}" class = "here-link">
+    
+                    here
+                
+                </a>
+    
+            </div>
+        
+    </div>
+</body>
+<!-- {{form.as_p}} -->
+
+
+{% endblock content %}
