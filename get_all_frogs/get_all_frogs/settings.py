@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pages',
     'authenti',
+    'get_all_frogs'
 ]
 
 MIDDLEWARE = [
