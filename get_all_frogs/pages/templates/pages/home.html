@@ -1,8 +1,6 @@
 {% extends 'index.html' %}
-
+{% load static %}
 {% block content %}
-
-
 {% if user.is_authenticated %}
 <div class="main">
     <div class="row">
@@ -15,7 +13,7 @@
         </div>
     </div>
 
-    <div class="token">
+    <div class="hovering-btn">
         <h1 class="text-center token-text">Enter Token</h1>
     </div>
 </div>
@@ -33,7 +31,7 @@
             <h2 class="text-center">Explore Points of Interest (POI)</h2>
             <p class="text-center">Discover intriguing locations where you can scan QR codes and join discussions.</p>
 
-            <a href="{% url 'login' %}" class="here-link">     
+            <a href="{% url 'login' %}" class="hovering-btn">     
               <h2 class="text-center">Login to continue</h2>
             </a>
         </div>

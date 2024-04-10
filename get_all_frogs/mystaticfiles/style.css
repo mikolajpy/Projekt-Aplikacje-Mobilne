@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;500;600;700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    opacity: 0;
+    background: linear-gradient(90deg, #10a848, #3879ae,#845EC2);
+    transition: opacity 3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    padding: 30px;
+}
+
+.nav .link ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    list-style: none;
+}
+
+.nav .link ul a {  
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    transition: all 600ms ease-in-out;
+}
+
+ul a .active {
+    color: #10a848; 
+}
+
+.nav .link ul a:hover {
+    color: #10a848;
+}
+
+
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7rem;
+    margin-top: 1px;
+
+}
+
+.main .row {
+  color: #fff;
+}
+
+.main .hovering-btn{
+  position: fixed;
+  bottom: 60px;
+  right: 50px;
+  padding: 10px 20px;
+  background: #10a848;
+  color: #fff;
+  font-size: 20px;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.register-form-wrapper {
+  margin-top: 20px;
+}
+
+.submit-btn{
+  margin-top: 1%;
+}

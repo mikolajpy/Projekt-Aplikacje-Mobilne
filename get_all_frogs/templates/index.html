@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,12 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE==Safari, Chrome">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get all Frogs</title>
-    <link rel="icon" href="img/P_logo.png" type="image/x-icon">      <!-- tu wjebac zabe -->
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="icon" href="{% static 'mz.jpg' %}" type="image/x-icon"> 
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 
 <body onload="document.body.style.opacity='1'">
-
     {% include 'navbar_component.html' %}
 
     {% block content %}
@@ -18,5 +18,4 @@
     {% endblock content %}
 
 </body>
-
 </html>

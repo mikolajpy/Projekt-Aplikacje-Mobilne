@@ -1,8 +1,25 @@
-
+{% load static %}
+{% if user.is_authenticated %}
 <div class="nav">
     <div class="logo">
         <a href= "{% url 'home' %}" class = "here-link">
-            <img src="" alt="magiczna zaba" style="width: 200px; height: 140px;">
+            <img src="{% static 'mz.jpg' %}" alt="magiczna zaba" style="width: 200px; height: 140px;">
+        </a>
+    </div>
+    <div class="link">
+        <ul>
+            <li><a href="ranking/ranking.html" >Ranking</a></li>
+            <li><a href="forums/forums.html">Points of interest</a></li>
+            <li><a href="achievements/achievements.html">Achievements</a></li>
+            <li><a href="/authenti/logout">Logout</a></li>                 
+        </ul>
+    </div>
+</div>   
+{% else %}
+<div class="nav">
+    <div class="logo">
+        <a href= "{% url 'home' %}" class = "here-link">
+            <img src="{% static 'mz.jpg' %}" alt="magiczna zaba" style="width: 200px; height: 140px;">
         </a>
     </div>
     <div class="link">
@@ -11,8 +28,9 @@
             <li><a href="forums/forums.html">Points of interest</a></li>
             <li><a href="achievements/achievements.html">Achievements</a></li>
             <li><a href="/authenti/login">Login</a></li>
-            <li><a href="/authenti/register">Register</a></li>
-            <li><a href="/authenti/logout">Logout</a></li>                 
+            <li><a href="/authenti/register">Register</a></li>           
         </ul>
     </div>
-</div>   
+</div>  
+
+{% endif %}
