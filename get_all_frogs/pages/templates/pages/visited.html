@@ -3,7 +3,7 @@
 {% block content %}
 {% for visited in visited_list %}
     {% for zabka in visited.zabka.all %}
-    <p>Nazwa: {{ zabka.name }}, user: {{ visited.visitor }}</p>
+    <p>Nazwa: {{ zabka.name }}, user: {{visited.visitor  }}</p>
     {% endfor %}
 {% endfor %}
 {% endblock %}

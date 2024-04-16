@@ -11,13 +11,13 @@ def home(request):
                 print(zabka.token + zabka.localization)
                 visited, c = VisitedZabkas.objects.get_or_create(visitor=request.user)
                 visited.zabka.add(zabka)
-                return render(request, 'pages/home.html')
+                return render(request, 'pages/valid.html')
             except:
-                return render(request, 'pages/home.html')
+                return render(request, 'pages/invalid.html')
     return render(request, 'pages/home.html')
 
 
 def visited_zabkas(request):
     if request.user.is_authenticated:
         visited_list = VisitedZabkas.objects.all()
-        return render(request, 'visited.html', {'visited_list': visited_list})
+        return render(request, 'pages/visited.html', {'visited_list': visited_list})
