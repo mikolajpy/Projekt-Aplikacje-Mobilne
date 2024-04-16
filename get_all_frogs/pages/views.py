@@ -14,6 +14,7 @@ def home(request):
                 return render(request, 'pages/home.html')
             except:
                 return render(request, 'pages/home.html')
+    return render(request, 'pages/home.html')
 
 
 def visited_zabkas(request):

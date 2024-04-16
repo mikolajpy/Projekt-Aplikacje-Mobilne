@@ -9,9 +9,10 @@ def generate_token():
 class Zabka(models.Model):
     localization = models.CharField(max_length=200, blank=False, null=True)
     token = models.CharField(max_length=10, blank=False, null=True, default=generate_token)
+    name = models.CharField(max_length=10, blank=False, null=True)
 
 class VisitedZabkas(models.Model):
-    zabka = models.ManyToManyField(Zabka, blank=False, related_name="Zabka_place")
+    zabka = models.ManyToManyField(Zabka)
     visitor = models.ForeignKey(User, on_delete = models.CASCADE)
     
 class Achievements(models.Model):
