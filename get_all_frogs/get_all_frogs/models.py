@@ -11,8 +11,12 @@ class Token(models.Model):
     value = models.CharField(max_length=10, blank=False, null=True) 
 
 class Achievements(models.Model):
-    achievement_owner = models.ForeignKey(User, on_delete = models.CASCADE)
+    achievment_id = models.AutoField(primary_key=True)
     achievement_name = models.CharField(max_length=200, blank=False, null=True)
+
+class AssignedAcievments(models.Model):
+    achievement_owner = models.ForeignKey(User, on_delete = models.CASCADE)
+    achievment_id = models.ForeignKey(Achievements, on_delete = models.CASCADE)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)

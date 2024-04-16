@@ -1,0 +1,7 @@
+{% extends 'index.html' %}
+
+{% block content %}
+{% for achievment in achievments_list %}
+    <p>Achievement ID: {{ achievment.achievment_id }}, Achievement Name: {{ achievment.achievment_id.achievement_name }},  Username: {{ achievment.achievement_owner.username }}</p>
+{% endfor %}
+{% endblock %}

@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pages',
     'authenti',
-    'get_all_frogs'
+    'get_all_frogs',
+    'achievments'
 ]
 
 MIDDLEWARE = [

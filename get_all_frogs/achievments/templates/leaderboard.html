@@ -1,0 +1,7 @@
+{% extends 'index.html' %}
+
+{% block content %}
+{% for user in leaderboard %}
+    <p>Username: {{ user.username }}, Achievement Count: {{ user.num_achievments }}</p>
+{% endfor %}
+{% endblock%}
