@@ -1,15 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
+import string
+import random
 
+def generate_token():
+    return ''.join(random.choice(string.ascii_letters) for _ in range(8))
 
 class Zabka(models.Model):
     localization = models.CharField(max_length=200, blank=False, null=True)
+    token = models.CharField(max_length=10, blank=False, null=True, default=generate_token)
 
-class Token(models.Model):
+class VisitedZabkas(models.Model):
     zabka = models.ManyToManyField(Zabka, blank=False, related_name="Zabka_place")
     visitor = models.ForeignKey(User, on_delete = models.CASCADE)
-    value = models.CharField(max_length=10, blank=False, null=True) 
-
+    
 class Achievements(models.Model):
     achievment_id = models.AutoField(primary_key=True)
     achievement_name = models.CharField(max_length=200, blank=False, null=True)

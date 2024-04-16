@@ -14,9 +14,17 @@
     </div>
 
     <div class="hovering-btn">
-        <h1 class="text-center token-text">Enter Token</h1>
+        <h1 class="text-center token-text"><form method = "POST" action = "" class = "token-form">
+            {% csrf_token %}
+            {% if form.errors %}
+            <p>Something is wrong</p>
+            {% endif %}
+            <input type = "text" placeholder = "ENTER TOKEN" name = "token">
+            <input type = "submit" value = "Submit">
+        </form></h1>
     </div>
 </div>
+
 
   <!-- Tutaj trzeba dodać form, w którym będzie sie dało wysłać token i potem redirecta po submicie do podstrony zabki i guess, moze byc tez ranking albo achivements i tam odpowiednio na przyklad ile brakuje do nowego achivementu albo pozycja w rankingu, czy cos, badzcie kreatywni chlopaki -->
 
