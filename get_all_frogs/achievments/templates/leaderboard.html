@@ -2,6 +2,10 @@
 
 {% block content %}
 {% for user in leaderboard %}
+<div class="main">
+    <div class="row">
     <p>Username: {{ user.username }}, Achievement Count: {{ user.num_achievments }}</p>
+    </div>
+</div>
 {% endfor %}
 {% endblock%}
