@@ -1,0 +1,43 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<style>
+    .store-list {
+        list-style-type: none;
+        padding: 0;
+    }
+    .store-list li {
+        min-width: 30%;
+        display: inline-block;
+        max-width: 60%;
+        margin: 10px;
+        background-color: #12a54e; 
+        color: white;
+        border-radius: 20px; 
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+    }
+    .store-list li a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+    }
+    .store-list li:hover {
+        background-color: #055927; 
+        cursor: pointer;
+    }
+</style>
+
+<center>    
+<h1><FONT COLOR="ffffff">LISTA SKLEPÓW W BAZIE</h1> </FONT>
+
+{% for store in stores %}
+<div class="store-list">
+    <div class="row">
+    <p><li>LINK DO SKLEPU -> <a href="{% url 'store-detail' store.id %}">{{ store.name }}</a></li></p>
+    </div>
+</div>
+{% endfor %}
+
+</center>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+{% block content %}
+<style>
+    .com {
+        list-style-type: none;
+        padding: 0;
+    }
+    .com li {
+        padding: 5px 5px;
+        min-width: 30%;
+        max-width: 70%;
+        position: relative;
+        display: inline-block;
+        margin: 10px;
+        background-color: rgba(245, 245, 245, 0.733); 
+        color: black;
+        border-radius: 20px; 
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+        text-align: justify;
+    }
+    .com li a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+    }
+    .score{
+        border: 1px solid black;
+        width: 130px;
+        padding: 5px 5px;
+        border-radius: 20px;
+        background-color: #288a87;
+    }
+    .posted{
+        border: 1px solid black;
+        border-radius: 10px;
+        background-color: #12a54e;
+        color: black;
+        min-width: 30%;
+        margin: 0;
+        padding: 5px 5px;
+    }
+    .buton{
+        position: relative;
+    }
+    
+</style>
+
+<center>
+<h1>{{ store.name }}</h1>
+<p>{{ store.localization }}</p>
+
+<h2>Comments</h2>
+<form method="post">
+    {% csrf_token %}
+    <textarea name="comment" placeholder="Add a comment..."></textarea><br/>
+    <button class="buton" type="submit">Post Comment</button>
+</form>
+
+<ul class="com">
+
+    {% for comment in comments %}
+    <li><h2 class="posted">{{ comment.user.username }} posted at {{comment.created_at}}</h2> <p>{{ comment.comment }}</p><br/><h2 class="score">Ocena:{{comment.Ocena}}</h2></li>
+    {% endfor %}
+</ul>
+</center>
+{% endblock %}

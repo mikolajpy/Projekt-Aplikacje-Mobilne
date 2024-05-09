@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import string
 import random
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 def generate_token():
     return ''.join(random.choice(string.ascii_letters) for _ in range(8))
@@ -25,9 +26,17 @@ class AssignedAcievments(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-#test    
 
 
+class StoreComment(models.Model):
+    store = models.ForeignKey(Zabka, on_delete=models.CASCADE, related_name='comments')
+    Ocena = models.IntegerField(default=0 ,validators=[MinValueValidator(0), MaxValueValidator(10)])
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comment by {self.user.username} on {self.store.name}"
 
 # class Chat(models.Model):
 #     participant_1 = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'participant_1')

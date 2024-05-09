@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'pages',
     'authenti',
     'get_all_frogs',
-    'achievments'
+    'achievments',
+    'forum',
 ]
 
 MIDDLEWARE = [

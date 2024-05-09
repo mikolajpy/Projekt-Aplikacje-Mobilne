@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from forum.views import store_list, store_detail
 
 urlpatterns = [
     path('', include('pages.urls')),
@@ -23,4 +24,6 @@ urlpatterns = [
     path('authenti/', include('authenti.urls')),
     path('achievments/', include('achievments.urls')),
     path('pages/', include('pages.urls')),
+    path('forums/', store_list, name='store-list'),
+    path('stores/<int:store_id>/', store_detail, name='store-detail'),
 ]
