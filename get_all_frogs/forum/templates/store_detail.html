@@ -4,17 +4,18 @@
     .com {
         list-style-type: none;
         padding: 0;
+        margin-bottom: 20px;
     }
     .com li {
-        padding: 5px 5px;
-        min-width: 30%;
-        max-width: 70%;
+        display: block;
+        min-width: 75%;
+        max-width: 75%;
         position: relative;
         display: inline-block;
-        margin: 10px;
-        background-color: rgba(245, 245, 245, 0.733); 
+        margin: 15px;
+        background-color: rgba(245, 245, 245, 0.733);
         color: black;
-        border-radius: 20px; 
+        border-radius: 15px; 
         padding: 10px 20px;
         transition: background-color 0.3s;
         text-align: justify;
@@ -28,7 +29,7 @@
         border: 1px solid black;
         width: 130px;
         padding: 5px 5px;
-        border-radius: 20px;
+        border-radius: 15px;
         background-color: #288a87;
     }
     .posted{
@@ -43,25 +44,97 @@
     .buton{
         position: relative;
     }
-    
+
+    textarea {
+        min-height: 200px;
+        max-height: 200px;
+        max-width:70%;
+        min-width:70%;
+    }
+    .store {
+        min-width: 40%;
+        max-width: 40%;
+        border: 1px solid black;
+        background-color: rgba(56, 192, 51, 0.5);
+        border-radius: 15px;
+    }
+    .section{
+        min-width: 70%;
+        max-width: 70%;
+        border: 1px solid black;
+        background-color: whitesmoke;
+        border-radius: 10px;
+    }
+    .butto-slider{
+        max-width: 20%;
+        padding: 10px,10px;
+        border: 1px solid black;
+        background-color: whitesmoke;
+        border-radius: 15px;
+    }
+    .slider {
+    appearance: none; 
+    width: 80%; 
+    height: 80%; 
+    background: linear-gradient(90deg, red, yellow,green);
+    outline: none; 
+    border-radius: 50px;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none; 
+  width: 20px;
+  height: 20px; 
+  border-radius: 50%; 
+  background: black; 
+  cursor: pointer; 
+}
 </style>
 
 <center>
-<h1>{{ store.name }}</h1>
-<p>{{ store.localization }}</p>
+    <div class="store">    
+        <h1>{{ store.name }}</h1>
+        <p>LOKALIZACJA: {{ store.localization }}</p>
+        {% if average_rating %}
+            <h3>Średnia ocena: {{ average_rating|floatformat:"2" }}</h3>
+        {% endif %}
+    </div>
+    <br/><br/><br/>
 
-<h2>Comments</h2>
-<form method="post">
-    {% csrf_token %}
-    <textarea name="comment" placeholder="Add a comment..."></textarea><br/>
-    <button class="buton" type="submit">Post Comment</button>
-</form>
+    <h2 class="section">Wystaw swoją opinię</h2>
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="comment" placeholder="Napisz recenzję..."></textarea><br/>
+        <div class="butto-slider"><br/>
+            <input class="slider" type="range" min="1" max="10" value="1" name="rating" oninput="rangeValue.innerText = this.value">
+            <p>TWOJA OCENA: </p><p id="rangeValue">1</p>
+            <button class="buton" type="submit">Dodaj recenzję</button>
+        </div>
+    </form>
+    <br/><br/><br/>
 
-<ul class="com">
+    <div class="section">
+        <h2 > KOMENTARZE </h2>
+        <h3>Liczba wszystkich komentarzy: {{ total_comments }}</h3>
+    </div>
 
-    {% for comment in comments %}
-    <li><h2 class="posted">{{ comment.user.username }} posted at {{comment.created_at}}</h2> <p>{{ comment.comment }}</p><br/><h2 class="score">Ocena:{{comment.Ocena}}</h2></li>
-    {% endfor %}
-</ul>
+    <ul class="com">
+        {% for comment in comments %}
+            {% if comment.comment %}  <!-- Sprawdź, czy komentarz nie jest pusty -->
+                <li>
+                    <h2 class="posted">{{ comment.user.username }} posted at {{comment.created_at}}</h2>
+                    <p>{{ comment.comment }}</p>
+                    <br/>
+                    <h2 class="score">Ocena:    {{comment.Ocena}}</h2>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+    {% if existing_comment %}
+        <script>
+            alert("Już dodałeś komentarz pod tym sklepem.");
+        </script>
+    {% endif %}
 </center>
 {% endblock %}

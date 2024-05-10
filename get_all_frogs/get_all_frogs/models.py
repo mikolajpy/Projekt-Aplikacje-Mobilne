@@ -11,6 +11,7 @@ class Zabka(models.Model):
     localization = models.CharField(max_length=200, blank=False, null=True)
     token = models.CharField(max_length=10, blank=False, null=True, default=generate_token)
     name = models.CharField(max_length=10, blank=False, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class VisitedZabkas(models.Model):
     zabka = models.ManyToManyField(Zabka)
@@ -30,11 +31,12 @@ class UserProfile(models.Model):
 
 class StoreComment(models.Model):
     store = models.ForeignKey(Zabka, on_delete=models.CASCADE, related_name='comments')
-    Ocena = models.IntegerField(default=0 ,validators=[MinValueValidator(0), MaxValueValidator(10)])
+    Ocena = models.IntegerField(default=1 ,validators=[MinValueValidator(1), MaxValueValidator(10)])
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-
+    class Meta:
+        unique_together = ('store', 'user')
     def __str__(self):
         return f"Comment by {self.user.username} on {self.store.name}"
 
