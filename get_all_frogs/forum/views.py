@@ -22,7 +22,7 @@ def store_detail(request, store_id):
 
         if request.method == 'POST':
             if existing_comment:
-                messages.warning(request, 'Już dodałeś komentarz pod tym sklepem.')
+                messages.warning(request, 'Już dodałeś komentarz pod tym sklepem !')
                 return redirect('store-detail', store_id=store_id)
             
             comment_text = request.POST.get('comment')

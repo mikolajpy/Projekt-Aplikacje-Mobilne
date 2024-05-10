@@ -97,9 +97,9 @@
     background-color: rgb(251, 255, 0);
     border-radius: 10px;
 }
-
 </style>
-<center>
+
+<body><center>
     <div class="store">    
         <h1>{{ store.name }}</h1>
         <p>LOKALIZACJA: {{ store.localization }}</p>
@@ -108,11 +108,11 @@
         {% endif %}
     </div>
     <br/><br/><br/>
-    
+     <!-- Nie wiem jak to dać żeby alletry był z przeglądarki -->
     {% if messages %}
         {% for message in messages %}
-            <div class="alert">
-                {{ message }} !
+            <div id="alert-message" class="alert">
+                {{ message }}
             </div>
         {% endfor %}
     {% endif %}
@@ -147,5 +147,5 @@
         {% endfor %}
     </ul>
 
-</center>
+</center></body>
 {% endblock %}
