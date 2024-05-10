@@ -89,8 +89,16 @@
   background: black; 
   cursor: pointer; 
 }
-</style>
+.alert{
+    min-width: 60%;
+    max-width: 60%;
+    border: 1px solid black;
+    size: 10%;
+    background-color: rgb(251, 255, 0);
+    border-radius: 10px;
+}
 
+</style>
 <center>
     <div class="store">    
         <h1>{{ store.name }}</h1>
@@ -100,6 +108,14 @@
         {% endif %}
     </div>
     <br/><br/><br/>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert">
+                {{ message }} !
+            </div>
+        {% endfor %}
+    {% endif %}
 
     <h2 class="section">Wystaw swoją opinię</h2>
     <form method="post">
@@ -131,10 +147,5 @@
         {% endfor %}
     </ul>
 
-    {% if existing_comment %}
-        <script>
-            alert("Już dodałeś komentarz pod tym sklepem.");
-        </script>
-    {% endif %}
 </center>
 {% endblock %}
