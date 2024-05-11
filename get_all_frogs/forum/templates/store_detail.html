@@ -1,4 +1,5 @@
 {% extends 'index.html' %}
+
 {% block content %}
 <style>
     .com {
@@ -30,7 +31,9 @@
         width: 130px;
         padding: 5px 5px;
         border-radius: 15px;
-        background-color: #288a87;
+        background-color: #eeff00b4;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
     .posted{
         border: 1px solid black;
@@ -39,6 +42,31 @@
         color: black;
         min-width: 30%;
         margin: 0;
+        padding: 5px 5px;
+        margin-bottom: 10px;
+    }
+    .reply{
+        font-size: 15px;
+        display: block;
+        min-width: 50%;
+        max-width: 90%;
+        position: relative;
+        display: inline-block;
+        margin: 15px;
+        background-color: rgb(252, 252, 252);
+        color: black;
+        border-radius: 15px; 
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+        text-align: justify;
+    }
+    .posted-reply{
+        border: 1px solid black;
+        border-radius: 10px;
+        background-color: #12a54e;
+        color: black;
+        min-width: auto;
+        max-width: auto;
         padding: 5px 5px;
     }
     .buton{
@@ -64,6 +92,7 @@
         border: 1px solid black;
         background-color: whitesmoke;
         border-radius: 10px;
+        margin-top: 80px;
     }
     .butto-slider{
         max-width: 20%;
@@ -73,79 +102,115 @@
         border-radius: 15px;
     }
     .slider {
-    appearance: none; 
-    width: 80%; 
-    height: 80%; 
-    background: linear-gradient(90deg, red, yellow,green);
-    outline: none; 
-    border-radius: 50px;
-}
+        appearance: none;
+        width: 80%;
+        height: 80%;
+        background: linear-gradient(90deg, red, yellow, green);
+        outline: none;
+        border-radius: 50px;
+    }
 
-.slider::-webkit-slider-thumb {
-  appearance: none; 
-  width: 20px;
-  height: 20px; 
-  border-radius: 50%; 
-  background: black; 
-  cursor: pointer; 
-}
-.alert{
-    min-width: 60%;
-    max-width: 60%;
-    border: 1px solid black;
-    size: 10%;
-    background-color: rgb(251, 255, 0);
-    border-radius: 10px;
-}
+    .slider::-webkit-slider-thumb {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: black;
+        cursor: pointer;
+    }
+    .alert{
+        min-width: 60%;
+        max-width: 60%;
+        border: 1px solid black;
+        size: 10%;
+        background-color: rgb(251, 255, 0);
+        border-radius: 10px;
+    }
+    .reply-form, .replies { display: none; }
 </style>
 
-<body><center>
-    <div class="store">    
-        <h1>{{ store.name }}</h1>
-        <p>LOKALIZACJA: {{ store.localization }}</p>
-        {% if average_rating %}
-            <h3>Średnia ocena: {{ average_rating|floatformat:"2" }}</h3>
-        {% endif %}
-    </div>
-    <br/><br/><br/>
-     <!-- Nie wiem jak to dać żeby alletry był z przeglądarki -->
-    {% if messages %}
-        {% for message in messages %}
-            <div id="alert-message" class="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
-
-    <h2 class="section">Wystaw swoją opinię</h2>
-    <form method="post">
-        {% csrf_token %}
-        <textarea name="comment" placeholder="Napisz recenzję..."></textarea><br/>
-        <div class="butto-slider"><br/>
-            <input class="slider" type="range" min="1" max="10" value="1" name="rating" oninput="rangeValue.innerText = this.value">
-            <p>TWOJA OCENA: </p><p id="rangeValue">1</p>
-            <button class="buton" type="submit">Dodaj recenzję</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <center>
+        <div class="store">    
+            <h1>{{ store.name }}</h1>
+            <p>LOCALIZATION: {{ store.localization }}</p>
+            {% if average_rating %}
+                <h3>Average rating: {{ average_rating|floatformat:"2" }}</h3>
+            {% endif %}
         </div>
-    </form>
-    <br/><br/><br/>
+        {% if messages %}
+            {% for message in messages %}
+                <div id="alert-message" class="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
 
-    <div class="section">
-        <h2 > KOMENTARZE </h2>
-        <h3>Liczba wszystkich komentarzy: {{ total_comments }}</h3>
-    </div>
+        <h2 class="section">Give your opinion</h2>
+        <form method="post">
+            {% csrf_token %}
+            <textarea name="comment" placeholder="Napisz recenzję..."></textarea><br/>
+            <div class="butto-slider"><br/>
+                <input class="slider" type="range" min="1" max="10" value="1" name="rating" oninput="rangeValue.innerText = this.value">
+                <p>TWOJA OCENA: </p><p id="rangeValue">1</p>
+                <button class="buton" type="submit">Add review</button>
+            </div>
+        </form>
 
-    <ul class="com">
-        {% for comment in comments %}
-            {% if comment.comment %}  <!-- Sprawdź, czy komentarz nie jest pusty -->
+        <div class="section">
+            <h2 > COMMENTS </h2>
+            <h3>Number of all comments: {{ total_comments }}</h3>
+        </div>
+
+        <ul class="com">
+            {% for comment in comments %}
                 <li>
                     <h2 class="posted">{{ comment.user.username }} posted at {{comment.created_at}}</h2>
                     <p>{{ comment.comment }}</p>
-                    <br/>
-                    <h2 class="score">Ocena:    {{comment.Ocena}}</h2>
+                    <h2 class="score">Rating:    {{comment.Ocena}}</h2>
+                    <button onclick="toggleReplyForm('{{ comment.id }}')">Reply</button>
+                    <div id="reply-form-{{ comment.id }}" class="reply-form" style="display: none;">
+                        <form method="post" action="{% url 'store-detail' store.id %}">
+                            {% csrf_token %}
+                            <textarea name="comment" required></textarea>
+                            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                            <button type="submit">Post Reply</button>
+                        </form>
+                    </div>
+                    <button class="buton" onclick="toggleReplies('{{ comment.id }}')">Show Replies</button>
+                    <div id="replies-{{ comment.id }}" style="display: none;">
+                        {% for reply in comment.replies.all %}
+                            <div class="reply">
+                                <h2 class="posted-reply">{{ reply.user.username }} replied {{ reply.created_at}}</h2>
+                                <p>{{ reply.comment }}</p>
+                            </div> 
+                        {% endfor %}
+                    </div>
                 </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
+            {% endfor %}
+        </ul>
+    </center>
 
-</center></body>
+    <script>
+        function toggleReplyForm(commentId) {
+            var form = document.getElementById('reply-form-' + commentId);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function toggleReplies(commentId) {
+            var replies = document.getElementById('replies-' + commentId);
+            replies.style.display = replies.style.display === 'none' ? 'block' : 'none';
+            var button = document.querySelector(`button[onclick="toggleReplies('${commentId}')"]`);
+            button.textContent = replies.style.display === 'none' ? 'Show Replies' : 'Hide Replies';
+        }
+    </script>
+</body>
+</html>
+
 {% endblock %}

@@ -39,11 +39,11 @@
     }
 </style>
 <center>    
-<h1 class="header">LISTA SKLEPÓW W BAZIE</h1>
+<h1 class="header">LIST OF ALL STORES</h1>
 
 {% for store in stores %}
 <div class="store-list">
-    <p><li>LINK DO SKLEPU -> <a href="{% url 'store-detail' store.id %}">{{ store.name }}</a></li></p>
+    <p><li><a href="{% url 'store-detail' store.id %}">SHOP LINK -> {{ store.name }}</a></li></p>
 </div>
 {% endfor %}
 
