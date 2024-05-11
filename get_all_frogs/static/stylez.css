@@ -1,0 +1,24 @@
+.store-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  .store-list li {
+    min-width: 30%;
+    display: inline-block;
+    max-width: 60%;
+    margin: 10px;
+    background-color: #12a54e; 
+    color: white;
+    border-radius: 20px; 
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+  }
+  .store-list li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+  }
+  .store-list li:hover {
+    background-color: #055927; 
+    cursor: pointer;
+  }

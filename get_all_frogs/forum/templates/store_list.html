@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+
+<link rel="stylesheet" href="/get_all_frogs/mystaticfiles/style.css">
+
+{% block content %}
+<style>
+.store-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  .store-list li {
+    min-width: 30%;
+    display: inline-block;
+    max-width: 60%;
+    margin: 10px;
+    background-color: #12a54e; 
+    color: white;
+    border-radius: 20px; 
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+    cursor: pointer; 
+  }
+  .store-list li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+  }
+  .store-list li:hover {
+    background-color: #055927; 
+    cursor: pointer;
+  }
+  .header {
+        min-width: 50%;
+        max-width: 50%;
+        border: 1px solid black;
+        background-color: whitesmoke;
+        border-radius: 20px;
+        color: black;
+    }
+</style>
+<center>    
+<h1 class="header">LIST OF ALL STORES</h1>
+
+{% for store in stores %}
+<div class="store-list">
+    <p><li><a href="{% url 'store-detail' store.id %}">SHOP LINK -> {{ store.name }}</a></li></p>
+</div>
+{% endfor %}
+
+</center>
+{% endblock %}
