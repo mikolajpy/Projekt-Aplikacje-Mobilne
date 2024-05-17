@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'get_all_frogs',
     'achievments',
     'forum',
+    'api',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

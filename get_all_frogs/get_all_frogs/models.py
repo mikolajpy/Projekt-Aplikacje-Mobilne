@@ -13,6 +13,8 @@ class Zabka(models.Model):
     token = models.CharField(max_length=10, blank=False, null=True, default=generate_token)
     name = models.CharField(max_length=10, blank=False, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.name
 
 class VisitedZabkas(models.Model):
     zabka = models.ManyToManyField(Zabka)
@@ -37,10 +39,10 @@ class StoreComment(models.Model):
     Ocena = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(10)])
     created_at = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['store', 'user'], condition=Q(parent__isnull=True), name='unique_main_comment')
-        ]
+    #class Meta:
+    #    constraints = [
+    #        models.UniqueConstraint(fields=['store', 'user'], condition=Q(parent__isnull=True), name='unique_main_comment')
+    #    ]
 
     def __str__(self):
         return f"Comment by {self.user.username} on {self.store.name} - Rating: {self.Ocena}"
