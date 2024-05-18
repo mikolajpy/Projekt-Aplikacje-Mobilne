@@ -1,73 +1,45 @@
 from rest_framework import serializers
-from rest_framework import serializers
-from django.shortcuts import get_object_or_404
 from get_all_frogs.models import StoreComment, Zabka, User
 
 class ZabkaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Zabka
-        fields = ['id','localization','name','created_at']
+        fields = ['id','localization','name']
 
 
 class CommSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')  # Użytkownik jest tylko do odczytu
+
     class Meta:
         model = StoreComment
-        fields = '__all__'
+        fields = ['id', 'parent','store' ,'user', 'comment', 'Ocena', 'created_at']
+        extra_kwargs = {
+            'store': {'required': True},
+            'comment': {'required': True}
+        }
 
     def validate(self, data):
-        store_value = data.get('store')
-        user_value = data.get('user')
-        parent_value = data.get('parent')
+        # Sprawdzenie, czy użytkownik próbuje stworzyć główny komentarz, gdy już taki istnieje
+        if 'parent' not in data or data['parent'] is None:
+            if 'Ocena' not in data or data['Ocena'] is None:
+                raise serializers.ValidationError("Main comment must include a rating.")
+            
+            # Sprawdzenie, czy istnieje już główny komentarz użytkownika do danego sklepu
+            user = self.context['request'].user
+            if StoreComment.objects.filter(user=user, parent__isnull=True).exists():
+                raise serializers.ValidationError("User can only create one main comment per store.")
 
-        # Sprawdzenie istnienia sklepu
-        if not Zabka.objects.filter(id=store_value.id).exists():
-            raise serializers.ValidationError("Podany sklep nie istnieje.")
-        
-        # Sprawdzenie istnienia użytkownika
-        if not User.objects.filter(id=user_value.id).exists():
-            raise serializers.ValidationError("Podany użytkownik nie istnieje.")
+        else:
+            # Sprawdzenie, czy dodawany jest komentarz do komentarza głównego
+            if data['parent'].parent is not None:
+                raise serializers.ValidationError("Cannot add a subcomment to another subcomment.")
 
-        # Sprawdzenie istnienia rodzica (jeśli podany)
-        if parent_value and not StoreComment.objects.filter(id=parent_value.id).exists():
-            raise serializers.ValidationError("Podany rodzic nie istnieje.")
+            if 'Ocena' in data and data['Ocena'] is not None:
+                raise serializers.ValidationError("Subcomments cannot include a rating.")
 
-        # Sprawdzenie, czy pole parent jest różne od null i jednocześnie próbuje dodać pole Ocena
-        if parent_value is not None and data.get('Ocena') is not None:
-            raise serializers.ValidationError("Ocena can only be added if parent is null.")
-
-        # Sprawdzenie, czy użytkownik ma już główny komentarz dla danego sklepu
-        if parent_value is None:
-            existing_comments = StoreComment.objects.filter(store=store_value, user=user_value, parent__isnull=True)
-            if existing_comments.exists():
-                raise serializers.ValidationError("Użytkownik ma już komentarz dla tego sklepu.")
-        
         return data
 
-    def create(self, validated_data):
-        parent_value = validated_data.get('parent')
-        store_value = validated_data.get('store')
-        user_value = validated_data.get('user')
-
-        # Sprawdzenie istnienia sklepu
-        if not Zabka.objects.filter(id=store_value.id).exists():
-            raise serializers.ValidationError("Podany sklep nie istnieje.")
-        
-        # Sprawdzenie istnienia użytkownika
-        if not User.objects.filter(id=user_value.id).exists():
-            raise serializers.ValidationError("Podany użytkownik nie istnieje.")
-
-        # Sprawdzenie istnienia rodzica (jeśli podany)
-        if parent_value and not StoreComment.objects.filter(id=parent_value.id).exists():
-            raise serializers.ValidationError("Podany rodzic nie istnieje.")
-
-        # Sprawdzenie, czy pole parent jest różne od null i jednocześnie próbuje dodać pole Ocena
-        if parent_value is not None and validated_data.get('Ocena') is not None:
-            raise serializers.ValidationError("Ocena can only be added if parent is null.")
-
-        # Sprawdzenie, czy użytkownik ma już główny komentarz dla danego sklepu
-        if parent_value is None:
-            existing_comments = StoreComment.objects.filter(store=store_value, user=user_value, parent__isnull=True)
-            if existing_comments.exists():
-                raise serializers.ValidationError("Użytkownik ma już komentarz dla tego sklepu.")
-
-        return super().create(validated_data)
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id','username', 'date_joined', 'last_login']

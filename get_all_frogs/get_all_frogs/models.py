@@ -13,8 +13,8 @@ class Zabka(models.Model):
     token = models.CharField(max_length=10, blank=False, null=True, default=generate_token)
     name = models.CharField(max_length=10, blank=False, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    def __str__(self):
-        return self.name
+    #def __str__(self):
+     #   return self.name
 
 class VisitedZabkas(models.Model):
     zabka = models.ManyToManyField(Zabka)
