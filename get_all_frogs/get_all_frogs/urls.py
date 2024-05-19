@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from forum.views import store_list, store_detail
+#from api.views import CommentsList, CommentsByStore, CommentsByParent
 
 urlpatterns = [
     path('', include('pages.urls')),
@@ -26,4 +27,6 @@ urlpatterns = [
     path('pages/', include('pages.urls')),
     path('stores/', store_list, name='store-list'),
     path('stores/<int:store_id>/', store_detail, name='store-detail'),
+    #----API----
+    path('A/', include('api.urls')),
 ]
