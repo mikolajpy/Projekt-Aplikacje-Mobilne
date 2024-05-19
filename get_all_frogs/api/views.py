@@ -132,7 +132,7 @@ class VisitedPost(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication, SessionAuthentication]
     serializer_class = VisitedSerializer
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         token = request.data.get('token')
         if not token:
             return Response({'error': 'Token is required'}, status=status.HTTP_400_BAD_REQUEST)
