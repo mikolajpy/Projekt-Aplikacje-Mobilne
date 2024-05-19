@@ -5,6 +5,7 @@ from rest_framework.authentication import TokenAuthentication,SessionAuthenticat
 from rest_framework.response import Response
 from get_all_frogs.models import Zabka, StoreComment , User , Achievements , AssignedAcievments , VisitedZabkas
 from .serializers import ZabkaSerializer, CommSerializer , UserSerializer , AchievementSerializer , AssignedSerializer , VisitedSerializer
+from django.db import transaction
 
 class ZabkaLista(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
@@ -78,7 +79,6 @@ class UserList(generics.ListAPIView):
     authentication_classes = [TokenAuthentication,SessionAuthentication]
     serializer_class = UserSerializer
     def get_queryset(self):
-        # Filter out superusers
         return User.objects.filter(is_superuser=False)
 
 
@@ -87,7 +87,6 @@ class UserDetail(generics.ListAPIView):
     authentication_classes = [TokenAuthentication,SessionAuthentication]
     serializer_class = UserSerializer
     def get_queryset(self):
-        # Filter out superusers
         return User.objects.filter(is_superuser=False)
 
 class AchievementList(generics.ListAPIView):
@@ -128,3 +127,27 @@ class VisitedByUser(generics.ListAPIView):
     def get_queryset(self):
         user_id = self.kwargs['visitor']
         return VisitedZabkas.objects.filter(visitor=user_id)
+    
+class VisitedPost(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    serializer_class = VisitedSerializer
+    def post(self, request, *args, **kwargs):
+        token = request.data.get('token')
+        if not token:
+            return Response({'error': 'Token is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            zabka = Zabka.objects.get(token=token)
+        except Zabka.DoesNotExist:
+            return Response({'message': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if VisitedZabkas.objects.filter(zabka=zabka, visitor=request.user).exists():
+            return Response({'message': 'You have already visited this store'}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = VisitedSerializer(data={'zabka': [zabka.id], 'visitor': request.user.id})
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'Visited successfully'}, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

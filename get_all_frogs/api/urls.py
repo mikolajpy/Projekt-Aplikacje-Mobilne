@@ -16,4 +16,5 @@ urlpatterns = [
     path('assigned/achievment=<int:achievment_id>/', views.AssignedListByAchievment.as_view()),
     path('assigned/user=<int:user_id>/', views.AssignedListByUser.as_view()),
     path('visited/user=<int:visitor>/', views.VisitedByUser.as_view()),
+    path('visit/', views.VisitedPost.as_view()),
 ]
