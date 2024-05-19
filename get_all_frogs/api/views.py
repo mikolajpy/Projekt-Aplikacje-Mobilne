@@ -3,9 +3,8 @@ from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication,SessionAuthentication 
 from rest_framework.response import Response
-from get_all_frogs.models import Zabka, StoreComment , User
-from .serializers import ZabkaSerializer, CommSerializer , UserSerializer 
-
+from get_all_frogs.models import Zabka, StoreComment , User , Achievements , AssignedAcievments , VisitedZabkas
+from .serializers import ZabkaSerializer, CommSerializer , UserSerializer , AchievementSerializer , AssignedSerializer , VisitedSerializer
 
 class ZabkaLista(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
@@ -24,7 +23,7 @@ class ZabkaOneShop(generics.RetrieveAPIView):
 class CommentsByStore(generics.ListCreateAPIView):
     serializer_class = CommSerializer
     authentication_classes = [TokenAuthentication,SessionAuthentication]
-    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -77,18 +76,55 @@ class CommentsByParent(generics.ListCreateAPIView):
 class UserList(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication,SessionAuthentication]
-    #queryset = User.objects.all()
     serializer_class = UserSerializer
     def get_queryset(self):
         # Filter out superusers
         return User.objects.filter(is_superuser=False)
 
 
-class UserDetail(generics.RetrieveAPIView):
+class UserDetail(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication,SessionAuthentication]
-    #queryset = User.objects.all()
     serializer_class = UserSerializer
     def get_queryset(self):
         # Filter out superusers
         return User.objects.filter(is_superuser=False)
+
+class AchievementList(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication,SessionAuthentication]
+    serializer_class = AchievementSerializer
+    queryset = Achievements.objects.all()
+
+
+class AssignedList(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication,SessionAuthentication]
+    serializer_class = AssignedSerializer
+    queryset = AssignedAcievments.objects.all()
+
+class AssignedListByAchievment(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    serializer_class = AssignedSerializer
+
+    def get_queryset(self):
+        achievment_id = self.kwargs['achievment_id']
+        return AssignedAcievments.objects.filter(achievment_id=achievment_id)
+
+class AssignedListByUser(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    serializer_class = AssignedSerializer
+    
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return AssignedAcievments.objects.filter(achievement_owner=user_id)
+
+class VisitedByUser(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    serializer_class = VisitedSerializer
+    def get_queryset(self):
+        user_id = self.kwargs['visitor']
+        return VisitedZabkas.objects.filter(visitor=user_id)
