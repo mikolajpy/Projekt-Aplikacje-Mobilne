@@ -7,13 +7,8 @@ Projekt obejmuje stworzenie prostej aplikacji webowej opartej na zasadach gry "z
 ## Setting up
 
 Aby uruchomić projekt, należy zainstalować następujące biblioteki: 
-- `pathlib`
 - `django`
 - `djangorestframework`
-- `string`
-- `random`
-- `os`
-- `drf-spectacular`
 
 W celu uruchomienia aplikacji:
 1. Wejdź do folderu `.../get_all_frogs/get_all_frogs`.
