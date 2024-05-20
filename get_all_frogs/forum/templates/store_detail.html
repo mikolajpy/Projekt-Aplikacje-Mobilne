@@ -119,6 +119,8 @@
         cursor: pointer;
     }
     .alert{
+        padding-top: 7px;
+        padding-bottom: 7px;
         min-width: 60%;
         max-width: 60%;
         border: 1px solid black;
@@ -155,7 +157,7 @@
         <h2 class="section">Give your opinion</h2>
         <form method="post">
             {% csrf_token %}
-            <textarea name="comment" placeholder="Napisz recenzję..."></textarea><br/>
+            <textarea name="comment" placeholder="Write a review..."></textarea><br/>
             <div class="butto-slider"><br/>
                 <input class="slider" type="range" min="1" max="10" value="1" name="rating" oninput="rangeValue.innerText = this.value">
                 <p>TWOJA OCENA: </p><p id="rangeValue">1</p>

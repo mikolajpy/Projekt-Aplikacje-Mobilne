@@ -18,7 +18,7 @@ def store_detail(request, store_id):
 
         if request.method == 'POST' and 'parent_id' not in request.POST:
             if existing_comment:
-                messages.warning(request, 'Już dodałeś komentarz pod tym sklepem !')
+                messages.warning(request, 'Already added a comment under this store !')
                 return redirect('store-detail', store_id=store_id)  
             comment_text = request.POST.get('comment')
             rating = request.POST.get('rating')
