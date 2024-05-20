@@ -2,8 +2,24 @@
 
 {% block content %}
 {% for visited in visited_list %}
-    {% for zabka in visited.zabka.all %}
-    <p>Nazwa: {{ zabka.name }}, user: {{visited.visitor  }}</p>
-    {% endfor %}
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Odwiedzone Żabki
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for zabka in visited.zabka.all %}
+            <tr>
+                <td>
+                    {{ zabka.name }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
 {% endfor %}
 {% endblock %}

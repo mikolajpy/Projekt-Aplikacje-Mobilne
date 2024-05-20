@@ -1,11 +1,35 @@
 {% extends 'index.html' %}
 
 {% block content %}
-{% for user in leaderboard %}
+
 <div class="main">
-    <div class="row">
-    <p>Username: {{ user.username }}, Achievement Count: {{ user.num_achievments }}</p>
-    </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Username
+                    </th>
+                    <th>
+                        Achievement  Count
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in leaderboard %}
+                <tr>
+                    <td>
+                        {{ user.username }}
+                    </td>
+                    <td>
+                        {{ user.num_achievments }}
+                    </td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
 </div>
-{% endfor %}
+
 {% endblock%}

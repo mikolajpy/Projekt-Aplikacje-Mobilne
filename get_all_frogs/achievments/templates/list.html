@@ -1,11 +1,24 @@
 {% extends 'index.html' %}
 
 {% block content %}
-{% for achievment in achievments_list %}
+
+
 <div class="main">
-    <div class="row">
-    <p> Achievement Name: {{ achievment.achievment_id.achievement_name }},  Username: {{ achievment.achievement_owner.username }}</p>
-    </div>
+    <table class="table">
+        <thead>
+            <th>Unlocked Achievments</th>
+        </thead>
+        <tbody>
+            {% for achievment in achievments_list %}
+            <tr>
+                <td>
+                    {{ achievment.achievment_id.achievement_name }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 </div>    
-{% endfor %}
+
 {% endblock %}
