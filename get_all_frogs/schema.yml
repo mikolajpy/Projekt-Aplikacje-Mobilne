@@ -1,0 +1,536 @@
+openapi: 3.0.3
+info:
+  title: Your Project API
+  version: 1.0.0
+  description: Your project description
+paths:
+  /API/achievments/:
+    get:
+      operationId: API_achievments_list
+      tags:
+      - API
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Achievement'
+          description: ''
+  /API/api-token-auth/:
+    post:
+      operationId: API_api_token_auth_create
+      tags:
+      - API
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+          description: ''
+  /API/assigned/:
+    get:
+      operationId: API_assigned_list
+      tags:
+      - API
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assigned'
+          description: ''
+  /API/assigned/achievment/{achievment_id}/:
+    get:
+      operationId: API_assigned_achievment_list
+      parameters:
+      - in: path
+        name: achievment_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - API
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assigned'
+          description: ''
+  /API/assigned/user/{user_id}/:
+    get:
+      operationId: API_assigned_user_list
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - API
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assigned'
+          description: ''
+  /API/coms/:
+    get:
+      operationId: API_coms_list
+      tags:
+      - API
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comm'
+          description: ''
+    post:
+      operationId: API_coms_create
+      tags:
+      - API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Comm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Comm'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comm'
+          description: ''
+  /API/store/{store_id}/coms/:
+    get:
+      operationId: API_store_coms_list
+      parameters:
+      - in: path
+        name: store_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - API
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comm'
+          description: ''
+    post:
+      operationId: API_store_coms_create
+      parameters:
+      - in: path
+        name: store_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Comm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Comm'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comm'
+          description: ''
+  /API/store/{store_id}/coms/{parent_id}/:
+    get:
+      operationId: API_store_coms_list_2
+      parameters:
+      - in: path
+        name: parent_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: store_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - API
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comm'
+          description: ''
+    post:
+      operationId: API_store_coms_create_2
+      parameters:
+      - in: path
+        name: parent_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: store_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Comm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Comm'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comm'
+          description: ''
+  /API/stores/:
+    get:
+      operationId: API_stores_list
+      tags:
+      - API
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Zabka'
+          description: ''
+  /API/stores/{id}/:
+    get:
+      operationId: API_stores_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - API
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Zabka'
+          description: ''
+  /API/users/:
+    get:
+      operationId: API_users_list
+      tags:
+      - API
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+  /API/users/{user_id}/:
+    get:
+      operationId: API_users_list_2
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - API
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+  /API/visit/:
+    post:
+      operationId: API_visit_create
+      tags:
+      - API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Visited'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Visited'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Visited'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Visited'
+          description: ''
+  /API/visited/user/{visitor}/:
+    get:
+      operationId: API_visited_user_list
+      parameters:
+      - in: path
+        name: visitor
+        schema:
+          type: integer
+        required: true
+      tags:
+      - API
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Visited'
+          description: ''
+components:
+  schemas:
+    Achievement:
+      type: object
+      properties:
+        achievment_id:
+          type: integer
+          readOnly: true
+        achievement_name:
+          type: string
+          nullable: true
+          maxLength: 200
+      required:
+      - achievment_id
+    Assigned:
+      type: object
+      properties:
+        achievment_id:
+          type: integer
+        achievement_owner:
+          type: integer
+      required:
+      - achievement_owner
+      - achievment_id
+    AuthToken:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        token:
+          type: string
+          readOnly: true
+      required:
+      - password
+      - token
+      - username
+    Comm:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        parent:
+          type: integer
+          nullable: true
+        store:
+          type: integer
+        user:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          readOnly: true
+        comment:
+          type: string
+        Ocena:
+          type: integer
+          maximum: 10
+          minimum: 1
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - comment
+      - created_at
+      - id
+      - store
+      - user
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        date_joined:
+          type: string
+          format: date-time
+      required:
+      - id
+      - username
+    Visited:
+      type: object
+      properties:
+        zabka:
+          type: array
+          items:
+            type: integer
+        visitor:
+          type: integer
+      required:
+      - visitor
+      - zabka
+    Zabka:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        localization:
+          type: string
+          nullable: true
+          maxLength: 200
+        name:
+          type: string
+          nullable: true
+          maxLength: 10
+      required:
+      - id
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
