@@ -19,6 +19,8 @@ from django.urls import include, path
 from forum.views import store_list, store_detail
 #from api.views import CommentsList, CommentsByStore, CommentsByParent
 
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
 urlpatterns = [
     path('', include('pages.urls')),
     path('admin/', admin.site.urls),
@@ -29,4 +31,7 @@ urlpatterns = [
     path('stores/<int:store_id>/', store_detail, name='store-detail'),
     #----API----
     path('A/', include('api.urls')),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]

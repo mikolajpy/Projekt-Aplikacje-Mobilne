@@ -1,0 +1,5 @@
+Django
+djangorestframework
+django-crispy-forms
+djangorestframework-simplejwt
+drf-spectacular

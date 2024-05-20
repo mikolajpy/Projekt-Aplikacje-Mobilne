@@ -36,12 +36,7 @@ class StoreComment(models.Model):
     comment = models.TextField()
     Ocena = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(10)])
     created_at = models.DateTimeField(auto_now_add=True)
-
-    #class Meta:
-    #    constraints = [
-    #        models.UniqueConstraint(fields=['store', 'user'], condition=Q(parent__isnull=True), name='unique_main_comment')
-    #    ]
-
+    
     def __str__(self):
         return f"Comment by {self.user.username} on {self.store.name} - Rating: {self.Ocena}"
 
