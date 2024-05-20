@@ -28,5 +28,5 @@ urlpatterns = [
     path('stores/', store_list, name='store-list'),
     path('stores/<int:store_id>/', store_detail, name='store-detail'),
     #----API----
-    path('A/', include('api.urls')),
+    path('API/', include('api.urls')),
 ]
