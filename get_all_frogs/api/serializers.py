@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from get_all_frogs.models import StoreComment, Zabka, User , Achievements , AssignedAcievments , VisitedZabkas
+from get_all_frogs.models import (
+    StoreComment, Zabka, User , Achievements , AssignedAcievments , VisitedZabkas
+)
 
 class ZabkaSerializer(serializers.ModelSerializer):
     class Meta:
