@@ -3,7 +3,10 @@ from django.contrib.auth.models import User
 import string
 import random
 from django.core.validators import MinValueValidator, MaxValueValidator
-from django.db.models import Q
+from django.db.models import Q, Count
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
+
 
 def generate_token():
     return ''.join(random.choice(string.ascii_letters) for _ in range(8))
@@ -44,6 +47,29 @@ class StoreComment(models.Model):
 
     def __str__(self):
         return f"Comment by {self.user.username} on {self.store.name} - Rating: {self.Ocena}"
+
+
+@receiver(m2m_changed, sender=VisitedZabkas.zabka.through)
+def assign_achievment(sender, instance, action, **kwargs):
+    print("sygnaltest")
+    user = instance.visitor
+    count = VisitedZabkas.objects.filter(visitor=user).aggregate(c=Count('zabka'))['c']
+
+    print(count)
+    achievement = None
+    if count == 1:
+        achievement = Achievements.objects.get(achievment_id=1)
+    elif count == 2:
+        achievement = Achievements.objects.get(achievment_id=2)
+    elif count == 5:
+        achievement = Achievements.objects.get(achievment_id=3)
+    elif count == 10:
+        achievement = Achievements.objects.get(achievment_id=4)
+    elif count == 20:
+        achievement = Achievements.objects.get(achievment_id=5)
+
+    if achievement:  
+        assigned_acievment, created = AssignedAcievments.objects.get_or_create(achievement_owner=user, achievment_id=achievement)
 
 
 # class Chat(models.Model):

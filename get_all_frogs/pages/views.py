@@ -19,5 +19,5 @@ def home(request):
 
 def visited_zabkas(request):
     if request.user.is_authenticated:
-        visited_list = VisitedZabkas.objects.all()
+        visited_list = VisitedZabkas.objects.filter(visitor=request.user)
         return render(request, 'pages/visited.html', {'visited_list': visited_list})
