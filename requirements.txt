@@ -1,0 +1,6 @@
+asgiref
+Django
+djangorestframework
+sqlparse
+typing_extensions
+drf_spectacular
