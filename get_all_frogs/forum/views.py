@@ -7,6 +7,7 @@ def store_list(request):
     if request.user.is_authenticated:
         stores = Zabka.objects.all()
         return render(request, 'store_list.html', {'stores': stores})
+    return render(request, 'pages/home.html')    
     
 def store_detail(request, store_id):
     if request.user.is_authenticated:
@@ -32,3 +33,4 @@ def store_detail(request, store_id):
             comment.save()
 
         return render(request, 'store_detail.html', {'store': store, 'comments': comments, 'total_comments': total_comments, 'average_rating': average_rating})
+    return render(request, 'pages/home.html')
